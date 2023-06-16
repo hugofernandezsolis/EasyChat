@@ -13,7 +13,7 @@ add_executable (
 ###############################################################################
 
 add_subdirectory (
-  Exception
+  Error
 )
 
 
@@ -24,7 +24,7 @@ add_subdirectory (
 target_link_libraries (
   ${PROJECT_NAME}
     PRIVATE
-      Exception
+      Error
 )
 
 ###############################################################################

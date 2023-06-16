@@ -4,7 +4,7 @@
 
 set (
   COMPONENT_NAME
-    Exception
+    Error
 )
 
 set (
@@ -13,13 +13,8 @@ set (
 )
 
 set (
-  HEADERS
-    ${CMAKE_CURRENT_LIST_DIR}/include/${COMPONENT_NAME}.h
-)
-
-set (
   TESTS
-    ${CMAKE_CURRENT_LIST_DIR}/tests/Exception_Tests.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/tests/Error_Tests.cpp
 )
 
 ###############################################################################
@@ -30,12 +25,12 @@ add_library (
   ${COMPONENT_NAME}
     SHARED
       ${SOURCES}
-      ${HEADERS}
 )
 
 add_executable (
   ${COMPONENT_NAME}_Tests
     ${TESTS}
+    ${SOURCES}
 )
 
 # Set include directories
@@ -60,6 +55,12 @@ find_package (
 target_link_libraries(
   ${COMPONENT_NAME}_Tests
     GTest::gtest_main
+)
+
+target_include_directories (
+  ${COMPONENT_NAME}_Tests
+    PUBLIC
+      ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
 include_directories (
