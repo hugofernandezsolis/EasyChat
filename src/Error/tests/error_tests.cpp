@@ -2,26 +2,21 @@
 
 #include <Error.h>
 
-namespace ect {
+namespace chat {
+namespace error {
 
-ErrorMessage aMessage = "Test message";
-ErrorCode aCode = UNDEFINED_ERROR;
-Error aError(aMessage, aCode);
+code_t aCode = UNDEFINED_ERROR;
+message_t aMessage = "Test message";
+Error aError(aCode, aMessage);
 
-/* 
- * Tests the constructor.
- */
 TEST(Error, Constructor) {
   EXPECT_EQ(aError.get_message(), aMessage);
   EXPECT_EQ(aError.get_code(), aCode);
 }
 
-/* 
- * Tests the getters and setters.
- */
 TEST(Error, GettersAndSetters) {
-  ErrorMessage aNewMessage = "New test message";
-  ErrorCode aNewCode = UNKNOWN_ERROR;
+  message_t aNewMessage = "New test message";
+  code_t aNewCode = UNKNOWN_ERROR;
 
   EXPECT_NO_THROW(aError.set_message(aNewMessage));
   EXPECT_NO_THROW(aError.set_code(aNewCode));
@@ -34,9 +29,6 @@ TEST(Error, GettersAndSetters) {
   EXPECT_EQ(aError.get_code(), aCode);
 }
 
-/* 
- * Tests functionality.
- */
 TEST(Error, Functionality) {
   EXPECT_NO_THROW(
     try {
@@ -54,4 +46,5 @@ int main(int argc, char** argv) {
   return RUN_ALL_TESTS();
 }
 
-} // namespace ect
+} // namespace error
+} // namespace chat

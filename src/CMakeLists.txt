@@ -1,43 +1,47 @@
 ###############################################################################
-###                          LIBRARY CONFIGURATIONS                         ###
+###                         LIBRARY CONFIGURATIONS                          ###
 ###############################################################################
 
 add_executable (
   ${PROJECT_NAME}
-    EasyChat.cpp
 )
 
-
-###############################################################################
-###                              SUBDIRECTORIES                             ###
-###############################################################################
-
-add_subdirectory (
-  Error
-)
-
-
-###############################################################################
-###                              LINK LIBRARIES                             ###
-###############################################################################
-
-target_link_libraries (
+target_sources (
   ${PROJECT_NAME}
     PRIVATE
-      Error
+      ${PROJECT_NAME}.cpp
 )
+
 
 ###############################################################################
-###                               GTEST LIBRARY                             ###
+###                               COMPONENTS                                ###
 ###############################################################################
 
-enable_testing()
-
-find_package (
-  GTest
-   REQUIRED
+set (
+  COMPONENTS
+    Error
+    Socket
 )
 
-include_directories (
-  ${GTEST_INCLUDE_DIRS}
-)
+foreach(COMPONENT IN LISTS COMPONENTS)
+  target_include_directories (
+  ${PROJECT_NAME}
+    PUBLIC
+      ${CMAKE_CURRENT_LIST_DIR}/${COMPONENT}/include
+  )
+
+  file (
+    GLOB
+      SOURCES
+        CONFIGURE_DEPENDS
+          "${CMAKE_CURRENT_LIST_DIR}/${COMPONENT}/src/*.cpp"
+  )
+
+  foreach(SRC IN LISTS SOURCES)
+    target_sources (
+      ${PROJECT_NAME}
+        PRIVATE
+          ${SRC}
+    )
+  endforeach()
+endforeach()

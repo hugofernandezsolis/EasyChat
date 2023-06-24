@@ -1,32 +1,35 @@
-#include <iostream>
+#pragma once
 
+#include <string>
+#include <exception>
 
-namespace ect {
+namespace chat {
+namespace error {
 
-typedef std::string ErrorMessage;
-
-enum ErrorCode {
-  UNDEFINED_ERROR = 0,
-  UNKNOWN_ERROR = 1
-}; 
-
-/* 
- * Defines a basic Error.
- */
-class Error { 
-
-  private:
-    ErrorMessage _message;
-    ErrorCode _code;
-
-  public:
-    Error(const ErrorMessage& iMessage = "", const ErrorCode& iCode = UNDEFINED_ERROR);
-
-    const ErrorMessage& get_message(void) const;
-    const ErrorCode& get_code(void) const;
-
-    void set_message(const ErrorMessage& iMessage);
-    void set_code(const ErrorCode& iCode);
+enum code_t : uint {
+  UNDEFINED_ERROR,
+  UNKNOWN_ERROR
 };
 
-} // namespace ect
+typedef std::string message_t;
+
+
+class Error : private std::exception {
+  public:
+    Error(const code_t& iCode, const message_t& iMessage);
+
+    code_t get_code(void) const;
+    message_t get_message(void) const;
+
+    void set_code(const code_t& iCode);
+    void set_message(const message_t& iMessage);
+
+    std::string what(void);
+
+  private:
+    code_t code_;
+    message_t message_;
+};
+
+} // namespace error
+} // namespace chat

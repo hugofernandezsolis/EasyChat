@@ -1,27 +1,32 @@
 #include <Error.h>
 
+namespace chat {
+namespace error {
 
-namespace ect {
+Error::Error(const code_t& iCode, const message_t& iMessage):
+  code_(iCode),
+  message_(iMessage)
+  {}
 
-Error::Error(const ErrorMessage& iMessage, const ErrorCode& iCode):
- _message(iMessage),
- _code(iCode)
- {}
-
-const ErrorMessage& Error::get_message(void) const {
-  return _message;
+code_t Error::get_code(void) const {
+  return code_;
 }
 
-const ErrorCode& Error::get_code(void) const {
-  return _code;
+message_t Error::get_message(void) const {
+  return message_;
 }
 
-void Error::set_message(const ErrorMessage& iMessage) {
-  _message = iMessage;
+void Error::set_code(const code_t& iCode) {
+  code_ = iCode;
 }
 
-void Error::set_code(const ErrorCode& iCode) {
- _code = iCode;
+void Error::set_message(const message_t& iMessage) {
+  message_ = iMessage;
 }
 
-} // namespace ect
+std::string Error::what(void) {
+  return std::string(std::to_string(code_) + ": " + message_);
+}
+
+} // namespace error
+} // namespace chat

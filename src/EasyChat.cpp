@@ -1,10 +1,12 @@
 #include <iostream>
 
-int main_func(void) {
-  std::cout << "Hola mundo desde main_func()" << std::endl;
-  return 0;
-}
+#include <Error.h>
+#include <Socket.h>
+
+using namespace chat;
+using namespace error;
 
 int main(void) {
-  main_func();
+  std::cout << error_c() << std::endl;
+  return 0;
 }
